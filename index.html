@@ -37,9 +37,74 @@
       context.fillStyle = "#000000";
       context.fillRect(0, 0, canvas.width, canvas.height);
     }
+
+
+    function updateSpaceship() {
+      if(keyboard[37]) {
+        spaceship.x -= 10;
+        if(spaceship.x < 0) {
+          spaceship.x = 0;
+        }
+      }
+
+      if (keyboard[39]) {
+        spaceship.x += 10;
+        var right = canvas.width - spaceship.width;
+        if (spaceship.x > right) {
+          spaceship.x = right;
+        }
+      }
+
+      if(keyboard[32]) {
+        if (!keyboard.fired) {
+          fireLaser();
+          keyboard.fired = true;
+        } else {
+          keyboard.fired = false;
+        }
+      }
+    }
+
+    var lasers = [];
+
+    function drawLasers() {
+      context.fillStyle = "white";
+      for(var iter in lasers) {
+        var laser = lasers[iter];
+        context.fillRect(laser.x, laser.y, laser.width, laser.height);
+      }
+    }
+
+    function updateLasers() {
+      for (var iter in lasers) {
+        var laser = lasers[iter];
+        laser.y -= 2;
+        laser.counter++;
+      }
+
+      lasers = lasers.filter(function(laser) {
+        return laser.y > 0;
+      });
+    }
+
+    function fireLaser () {
+
+      console.log('fireLaser');
+      lasers.push({
+        x: spaceship.x + 20,
+        y: spaceship.y - 10,
+        width: 10,
+        height: 30
+      });
+    }
+
     function gameLoop() {
+      updateSpaceship();
+      updateLasers();
+
       drawBackground();
       drawSpaceship();
+      drawLasers();
     }
 
     var keyboard = {};
@@ -53,15 +118,14 @@
       }
     }
 
-    function () {
+    (function () {
       addEvent(document, "keydown", function(e) {
         keyboard[e.keyCode] = true;
       });
       addEvent(document, "keyup", function(e) {
         keyboard[e.keyCode] = false;
       });
-    }();
-
+    })();
 
     setInterval(gameLoop, 1000/60);
     /**
