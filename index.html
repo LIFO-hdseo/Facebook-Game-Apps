@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  	<meta charset="utf-8">
+  <meta charset="utf-8">
 	<title>Alien Turtle Invasion</title>
 	<meta name="description" content="Alien Turtle Invasion Canvas Game">
 	<meta name="author" content="hdseo">
@@ -9,17 +9,38 @@
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  	<header>
-  	</header>
-  	<div id="main" role="main">
-    	<canvas id="game" width="600" height="400"></canvas>
-  	</div>
-  	<footer>
-  	</footer>
-  	<!--[if lt IE 7]>
-  	<script defer src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
-  	<script defer>window.attachEvent('onload', function() {CFInstall.check({mode:'overlay'})})</script>
-  	<![endif]-->
+	<header>
+	</header>
+	<div id="main" role="main">
+    <canvas id="game" width="600" height="400"></canvas>
+	</div>
+	<footer>
+	</footer>
+  <script>
+    var canvas = document.getElementById('game');
+    var context = canvas.getContext('2d');
+
+
+
+    function drawBackground() {
+      context.fillStyle = "#000000";
+      context.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    function gameLoop() {
+      drawBackground();
+    }
+
+    setInterval(gameLoop, 1000/60);
+    /**
+      NOTE
+        Determining an optimal refresh rate can be a bit tricky. You want the movement of your objects to appear smooth, and not jumpy. With a monitor refresh rate of 60Hz, your screen
+        refreshes once evenry 17 milliseconds (16.66667 to be a bit more precise). In order to ensure you have smooth movements in your game, you want to match that targeted refresh rate. In my example, I use 1,000/60 (the number of milliseconds divided by the Hertz rate) to give me the desired 16.66667 redraw rate. You may find in your game development that a refresh loop of 60 frames per second is overkill. A lot of gmaes can easily drop down to 30 frames per second without players noticing a drastic change. There are techniques in some game engines that dynamically test the frame rate the browser is capable of and dynamically adjust the frame rate for the game loop. This allows you to take advantage of hardware acceleration offered by different browser implementations easily, while providing consistent game play for less powerful browsers and computers.
+    */
+  </script>
+	<!--[if lt IE 7]>
+	<script defer src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+	<script defer>window.attachEvent('onload', function() {CFInstall.check({mode:'overlay'})})</script>
+	<![endif]-->
 </body>
 </html>
 
