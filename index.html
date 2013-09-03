@@ -20,6 +20,18 @@
     var canvas = document.getElementById('game');
     var context = canvas.getContext('2d');
 
+    var spaceship = {
+      x: 100,
+      y: 300,
+      width: 50,
+      height: 50,
+      counter: 0
+    };
+
+    function drawSpaceship() {
+      context.fillStyle = "white";
+      context.fillRect(spaceship.x, spaceship.y, spaceship.width, spaceship.height);
+    }
 
 
     function drawBackground() {
@@ -28,6 +40,7 @@
     }
     function gameLoop() {
       drawBackground();
+      drawSpaceship();
     }
 
     setInterval(gameLoop, 1000/60);
