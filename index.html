@@ -33,7 +33,6 @@
       context.fillRect(spaceship.x, spaceship.y, spaceship.width, spaceship.height);
     }
 
-
     function drawBackground() {
       context.fillStyle = "#000000";
       context.fillRect(0, 0, canvas.width, canvas.height);
@@ -41,6 +40,26 @@
     function gameLoop() {
       drawBackground();
       drawSpaceship();
+    }
+
+    var keyboard = {};
+
+    function () {
+      addEvent(document, "keydown", function(e) {
+        keyboard[e.keyCode] = true;
+      });
+      addEvent(document, "keyup", function(e) {
+        keyboard[e.keyCode] = false;
+      });
+    }();
+
+    function addEvent(node, name, func) {
+      if(node, addEventListener) {
+        node.addEventListener(name, func, false);
+      } else if(node.attachEvent) {
+        // MS 브라우저에 대한 처리.
+        node.attachEvent(name, func);
+      }
     }
 
     setInterval(gameLoop, 1000/60);
