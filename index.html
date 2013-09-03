@@ -44,6 +44,15 @@
 
     var keyboard = {};
 
+    function addEvent(node, name, func) {
+      if(node.addEventListener) {
+        node.addEventListener(name, func, false);
+      } else if(node.attachEvent) {
+        // MS 브라우저에 대한 처리.
+        node.attachEvent(name, func);
+      }
+    }
+
     function () {
       addEvent(document, "keydown", function(e) {
         keyboard[e.keyCode] = true;
@@ -53,14 +62,6 @@
       });
     }();
 
-    function addEvent(node, name, func) {
-      if(node, addEventListener) {
-        node.addEventListener(name, func, false);
-      } else if(node.attachEvent) {
-        // MS 브라우저에 대한 처리.
-        node.attachEvent(name, func);
-      }
-    }
 
     setInterval(gameLoop, 1000/60);
     /**
